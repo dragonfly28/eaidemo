@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -49,14 +50,13 @@ public class PayloadControllerTest {
                 .andExpect(status().isOk());
 
     }
-    
+
     @Test
     public void testPostPayload() throws Exception {
 
-        //mockMvc.perform(post("/payload"))
-        //        .andExpect(status().isOk());
-
+//        mockMvc.perform(post("/payload").contentType(MediaType.APPLICATION_JSON)
+//                .body("{\"amount\":\"5\", \"message\":\"Hello World!\"}".getBytes()))
+//                .andExpect(status().isOk());
     }
-
 
 }

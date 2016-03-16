@@ -10,14 +10,9 @@ package de.muenchen.eaidemo;
  * @author robert.jasny
  */
 public class Payload {
-    
-    private final int amount;
-    private final String message;
-    
-    public Payload(int amount, String message) {
-        this.amount = amount;
-        this.message = message;
-    }
+
+    private int amount;
+    private String message;
 
     public int getAmount() {
         return amount;
@@ -26,5 +21,13 @@ public class Payload {
     public String getMessage() {
         return message;
     }
-    
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
 }
