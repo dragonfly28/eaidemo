@@ -22,6 +22,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.MediaType;
 
 /**
  *
@@ -50,7 +51,7 @@ public abstract class AbstractIntegrationTest {
         return "http://localhost:" + port;
     }
 
-	// Some convenience methods to help you interact with your rest interface
+    // Some convenience methods to help you interact with your rest interface
     /**
      * @param requestMappingUrl should be exactly the same as defined in your
      * RequestMapping value attribute (including the parameters in {})
@@ -121,8 +122,11 @@ public abstract class AbstractIntegrationTest {
     protected <T> T postEntity(final String requestMappingUrl, final Class<T> serviceReturnTypeClass, final Object objectToPost) {
         final TestRestTemplate restTemplate = new TestRestTemplate();
         final ObjectMapper mapper = new ObjectMapper();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
         try {
-            final HttpEntity<String> requestEntity = new HttpEntity<String>(mapper.writeValueAsString(objectToPost));
+            final HttpEntity<String> requestEntity = new HttpEntity<String>(mapper.writeValueAsString(objectToPost), headers);
+
             final ResponseEntity<T> entity = restTemplate.postForEntity(getBaseUrl() + requestMappingUrl, requestEntity, serviceReturnTypeClass);
             return entity.getBody();
         } catch (final Exception ex) {

@@ -11,8 +11,8 @@ package de.muenchen.eaidemo;
  */
 public class Payload {
 
-    private int amount;
-    private String message;
+    private int amount = 0;
+    private String message = "";
 
     public int getAmount() {
         return amount;

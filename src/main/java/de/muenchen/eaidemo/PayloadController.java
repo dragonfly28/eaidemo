@@ -41,10 +41,13 @@ public class PayloadController {
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public @ResponseBody
     Payload save(@RequestBody Payload payload) {
+        Payload result = new Payload();
+        result.setAmount(payload.getAmount());
         if (payload.getMessage().isEmpty()) {
-            payload.setMessage("What is your message?");
+            result.setMessage("What is your message?");
+        } else {
+            result.setMessage(payload.getMessage());
         }
-        System.out.println(payload.toString());
-        return payload;
+        return result;
     }
 }
