@@ -1,2 +1,5 @@
 
 spring.main.sources: de.muenchen.eaidemo.MySpringBootRouter
+
+# Verarbeitete Files
+processed.dir: /tmp/eaidemo/processed/
