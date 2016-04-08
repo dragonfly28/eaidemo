@@ -5,6 +5,8 @@
  */
 package de.muenchen.eaidemo;
 
+import org.apache.camel.ProducerTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,33 +22,38 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/payload")
 public class PayloadController {
 
-//    @RequestMapping(method = RequestMethod.GET)
-//    public void uploadPayload(@RequestParam(defaultValue = "0") int amount, @RequestParam(defaultValue = "What's the message?") String message) {
-//    }
+    @Autowired
+    private ProducerTemplate producer;
+
     @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody
     Payload uploadPayload() {
         //return "You can upload a payload by posting to this same URL.";
         Payload payload = new Payload();
         payload.setAmount(0);
-        payload.setMessage("Default message...");
+        payload.setMessage("Please post a payload like this example.");
         return payload;
     }
 
     /**
+     * TODO: change to void method
      *
      * @param payload
      * @return
      */
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public @ResponseBody
-    Payload save(@RequestBody Payload payload) {
-        Payload result = new Payload();
-        result.setAmount(payload.getAmount());
+    String save(@RequestBody Payload payload) {
+        String result = new String();
         if (payload.getMessage().isEmpty()) {
-            result.setMessage("What is your message?");
+            result = "What is your message?";
         } else {
-            result.setMessage(payload.getMessage());
+            producer.sendBody("direct:uploaded", payload.toString());
+            if (payload.getAmount() < 10) {
+                result = "Payload stored to lower folder.";
+            } else {
+                result = "Payload stored to greater folder.";
+            }
         }
         return result;
     }

@@ -45,7 +45,7 @@ public class PayloadControllerTest {
         PayloadController instance = new PayloadController();
         Payload expResult = new Payload();
         expResult.setAmount(0);
-        expResult.setMessage("Default message...");
+        expResult.setMessage("Please post a payload like this example.");
         Payload result = instance.uploadPayload();
         assertNotEquals(expResult, result);
         assertEquals(expResult.getAmount(), result.getAmount());
@@ -59,12 +59,10 @@ public class PayloadControllerTest {
     public void testSave() {
         PayloadController instance = new PayloadController();
         Payload saveLoad = new Payload();
-        Payload expResult = new Payload();
-        expResult.setMessage("What is your message?");
-        Payload result = instance.save(saveLoad);
-        assertNotEquals(expResult, result);
-        assertEquals(expResult.getAmount(), result.getAmount());
-        assertEquals(expResult.getMessage(), result.getMessage());
+        String expResult = new String();
+        expResult = "What is your message?";
+        String result = instance.save(saveLoad);
+        assertEquals(expResult, result);
     }
     
 }

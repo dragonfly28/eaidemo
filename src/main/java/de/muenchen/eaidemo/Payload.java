@@ -30,4 +30,8 @@ public class Payload {
         this.message = message;
     }
 
+    @Override
+    public String toString() {
+        return String.format("{amount:%s,message:%s}", amount, message);
+    }
 }

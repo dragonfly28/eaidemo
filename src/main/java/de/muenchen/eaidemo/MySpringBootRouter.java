@@ -21,7 +21,7 @@ public class MySpringBootRouter extends FatJarRouter {
 //                .to("log:out");
 
         from("direct:uploaded")
-                .choice().when().jsonpath("$.[?(@.amount <= 10)]")
+                .choice().when().jsonpath("$.[?(@.amount < 10)]")
                 .to("direct:lower")
                 .otherwise()
                 .to("direct:greater");

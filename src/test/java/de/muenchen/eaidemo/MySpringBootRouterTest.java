@@ -34,7 +34,7 @@ public class MySpringBootRouterTest extends CamelTestSupport {
     }
  
     @Test
-    public void testSendLowerMessage() throws Exception {
+    public void testSendLowerMessage1() throws Exception {
         String p = "{\"amount\":1,\"message\":\"Lower message...\"}";
 
         lowerEndpoint.expectedBodiesReceived(p);
@@ -46,7 +46,22 @@ public class MySpringBootRouterTest extends CamelTestSupport {
     }
     
     @Test
-    public void testSendGreaterMessage() throws Exception {
+    public void testSendGreaterMessage10() throws Exception {
+        String p = "{\"amount\":10,\"message\":\"Greater message...\"}";
+
+        lowerEndpoint.expectedMessageCount(0);
+        //lowerEndpoint.expectedBodiesReceived(p);
+        greaterEndpoint.expectedBodiesReceived(p);
+        greaterEndpoint.expectedMessageCount(1);
+ 
+        template.sendBody(p);
+ 
+        lowerEndpoint.assertIsSatisfied();
+        greaterEndpoint.assertIsSatisfied();
+    }
+    
+    @Test
+    public void testSendGreaterMessage11() throws Exception {
         String p = "{\"amount\":11,\"message\":\"Lower message...\"}";
 
         greaterEndpoint.expectedBodiesReceived(p);
@@ -61,9 +76,8 @@ public class MySpringBootRouterTest extends CamelTestSupport {
     protected RouteBuilder createRouteBuilder() {
         return new RouteBuilder() {
             public void configure() {
-                //from("direct:start").filter(header("foo").isEqualTo("bar")).to("mock:result");
                 from("direct:start")
-                .choice().when().jsonpath("$.[?(@.amount <= 10)]")
+                .choice().when().jsonpath("$.[?(@.amount < 10)]")
                 .to("mock:lower")
                 .otherwise()
                 .to("mock:greater");

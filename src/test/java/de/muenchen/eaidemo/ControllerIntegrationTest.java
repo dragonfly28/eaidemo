@@ -24,7 +24,7 @@ public class ControllerIntegrationTest extends AbstractIntegrationTest {
         Payload answer = getEntity("/payload", p.getClass(), p);
         assertNotNull(answer);
         assertEquals(answer.getAmount(), 0);
-        assertEquals(answer.getMessage(), "Default message...");
+        assertEquals(answer.getMessage(), "Please post a payload like this example.");
         
     }
     
@@ -34,10 +34,10 @@ public class ControllerIntegrationTest extends AbstractIntegrationTest {
         p.setAmount(99);
         p.setMessage("Hello World!");
         
-        Payload answer = postEntity("/payload", p.getClass(), p);
+        String answer = new String();
+        answer = postEntity("/payload", answer.getClass(), p);
         assertNotNull(answer);
-        assertEquals(answer.getAmount(), 99);
-        assertEquals(answer.getMessage(), "Hello World!");
+        assertEquals(answer.toString(), "Payload stored to greater folder.");
         
     }
 
